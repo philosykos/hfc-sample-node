@@ -1,0 +1,78 @@
+Organizations:
+    - &chainz
+        Name: chainz
+        ID: chainz
+        MSPDir: crypto-config/ordererOrganizations/chainz/msp
+    - &skcc
+        Name: skcc
+        ID: skcc
+        MSPDir: crypto-config/peerOrganizations/skcc/msp
+        AnchorPeers:
+            - Host: skcc_peer2
+              Port: 8051
+    - &contractor1
+        Name: contractor1
+        ID: contractor1
+        MSPDir: crypto-config/peerOrganizations/contractor1/msp
+        AnchorPeers:
+            - Host: contractor1_peer2
+              Port: 11051
+
+Orderer: &solo
+    OrdererType: solo
+    Addresses:
+        - chainz_orderer1:7050
+    BatchTimeout: 1s
+    BatchSize:
+        MaxMessageCount: 10
+        AbsoluteMaxBytes: 99 MB
+        PreferredMaxBytes: 512 KB
+Orderer: &kafka
+    OrdererType: kafka
+    Addresses:
+        - chainz_orderer1:6050
+        - chainz_orderer2:7050
+    BatchTimeout: 1s
+    BatchSize:
+        MaxMessageCount: 10
+        AbsoluteMaxBytes: 99 MB
+        PreferredMaxBytes: 512 KB
+    MaxChannels: 0
+    Kafka:
+        Brokers:
+            - kafka1:9092
+
+Profiles:
+    TwoOrgsSoloGenesis:
+        Orderer:
+            <<: *solo
+            Organizations:
+                - *chainz
+        Consortiums:
+            PocConsortium:
+                Organizations:
+                    - *skcc
+                    - *contractor1
+    TwoOrgsKafkaGenesis:
+        Orderer:
+            <<: *kafka
+            Organizations:
+                - *chainz
+        Consortiums:
+            KafkaConsortium:
+                Organizations:
+                    - *skcc
+                    - *contractor1
+    TwoOrgsSoloChannel:
+        Consortium: PocConsortium
+        Application:
+            Organizations:
+                - *skcc
+                - *contractor1
+    TwoOrgsKafkaChannel:
+        Consortium: KafkaConsortium
+        Application:
+            Organizations:
+                - *skcc
+                - *contractor1
+

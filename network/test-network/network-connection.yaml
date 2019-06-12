@@ -1,0 +1,168 @@
+name: "test-network"
+x-type: "hlfv1"
+description: "ChainZ Test Network"
+version: "1.0"
+
+#client:
+#   Which organization does this application instance belong to? The value must be the name of an org
+#   defined under "organizations"
+#  organization: Org1
+#
+#   Some SDKs support pluggable KV stores, the properties under "credentialStore"
+#   are implementation specific
+#  credentialStore:
+#     [Optional]. Specific to FileKeyValueStore.js or similar implementations in other SDKs. Can be others
+#     if using an alternative impl. For instance, CouchDBKeyValueStore.js would require an object
+#     here for properties like url, db name, etc.
+#    path: "/tmp/hfc-kvs"
+#
+#     [Optional]. Specific to the CryptoSuite implementation. Software-based implementations like
+#     CryptoSuite_ECDSA_AES.js in node SDK requires a key store. PKCS#11 based implementations does
+#     not.
+#    cryptoStore:
+#       Specific to the underlying KeyValueStore that backs the crypto key store.
+#      path: "/tmp/hfc-cvs"
+#
+#     [Optional]. Specific to Composer environment
+#    wallet: wallet-name
+
+channels:
+  skcc-channel:
+    orderers:
+      - chainz_orderer1
+    peers:
+      skcc_peer1:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+        discover: true
+      skcc_peer2:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: false
+        eventSource: true
+        discover: false
+      contractor1_peer1:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+        discover: true
+      contractor1_peer2:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: false
+        eventSource: true
+        discover: false
+    chaincodes:
+      - sample:1.0
+  skcc-channel2:
+    orderers:
+      - chainz_orderer1
+    peers:
+      skcc_peer1:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+        discover: true
+      skcc_peer2:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: false
+        eventSource: true
+        discover: false
+      contractor1_peer1:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: true
+        eventSource: true
+        discover: true
+      contractor1_peer2:
+        endorsingPeer: true
+        chaincodeQuery: true
+        ledgerQuery: false
+        eventSource: true
+        discover: false
+
+organizations:
+  skcc:
+    mspid: skcc
+    peers:
+      - skcc_peer1
+      - skcc_peer2
+    certificateAuthorities:
+      - ca_skcc
+
+  contractor1:
+    mspid: contractor1
+    peers:
+      - contractor1_peer1
+      - contractor1_peer2
+    certificateAuthorities:
+      - ca_contractor1
+
+orderers:
+  chainz_orderer1:
+    url: grpcs://localhost:6050
+    grpcOptions:
+      ssl-target-name-override: chainz_orderer1
+    tlsCACerts:
+      path: network/test-network/crypto-config/ordererOrganizations/chainz/orderers/chainz_orderer1/tls/ca.crt
+
+peers:
+  skcc_peer1:
+    url: grpcs://localhost:7051
+    grpcOptions:
+      ssl-target-name-override: skcc_peer1
+      request-timeout: 120
+    tlsCACerts:
+      path: network/test-network/crypto-config/peerOrganizations/skcc/peers/skcc_peer1/tls/ca.crt
+
+  skcc_peer2:
+    url: grpcs://localhost:8051
+    grpcOptions:
+      ssl-target-name-override: skcc_peer2
+      request-timeout: 120
+    tlsCACerts:
+      path: network/test-network/crypto-config/peerOrganizations/skcc/peers/skcc_peer2/tls/ca.crt
+
+  contractor1_peer1:
+    url: grpcs://localhost:10051
+    grpcOptions:
+      ssl-target-name-override: contractor1_peer1
+      request-timeout: 120
+    tlsCACerts:
+      path: network/test-network/crypto-config/peerOrganizations/contractor1/peers/contractor1_peer1/tls/ca.crt
+
+  contractor1_peer2:
+    url: grpcs://localhost:11051
+    grpcOptions:
+      ssl-target-name-override: contractor1_peer2
+      request-timeout: 120
+    tlsCACerts:
+      path: network/test-network/crypto-config/peerOrganizations/contractor1/peers/contractor1_peer2/tls/ca.crt
+
+certificateAuthorities:
+  ca_skcc:
+    url: https://localhost:7054
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: network/test-network/crypto-config/peerOrganizations/skcc/ca/ca.skcc-cert.pem
+    registrar:
+      - enrollId: admin
+        enrollSecret: adminpw
+    caName: ca_skcc
+
+  ca_contractor1:
+    url: https://localhost:8054
+    httpOptions:
+      verify: false
+    tlsCACerts:
+      path: network/test-network/crypto-config/peerOrganizations/contractor1/ca/ca.contractor1-cert.pem
+    registrar:
+      - enrollId: admin
+        enrollSecret: adminpw
+    caName: ca_contractor1

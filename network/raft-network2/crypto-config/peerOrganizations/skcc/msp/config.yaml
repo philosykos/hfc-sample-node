@@ -1,0 +1,8 @@
+NodeOUs:
+  Enable: true
+  ClientOUIdentifier:
+    Certificate: cacerts/ca.skcc-cert.pem
+    OrganizationalUnitIdentifier: client
+  PeerOUIdentifier:
+    Certificate: cacerts/ca.skcc-cert.pem
+    OrganizationalUnitIdentifier: peer

@@ -1,0 +1,244 @@
+#
+# Copyright IBM Corp All Rights Reserved
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+version: '2'
+
+networks:
+  kafka:
+
+services:
+  zookeeper1:
+    container_name: zookeeper1
+    image: hyperledger/fabric-zookeeper:$BASEIMAGE_VERSION
+    environment:
+      - ZOO_MY_ID=1
+      - ZOO_SERVERS=server.1=zookeeper1:2888:3888
+    ports:
+      - 2181:2181
+      - 2888:2888
+      - 3888:3888
+    networks:
+      - kafka
+
+  kafka1:
+    container_name: kafka1
+    image: hyperledger/fabric-kafka:$BASEIMAGE_VERSION
+    environment:
+      - KAFKA_BROKER_ID=0
+      - LOG4J_LOGGER_KAFKA=DEBUG
+      - KAFKA_MESSAGE_MAX_BYTES=103809024 # 99 * 1024 * 1024 B
+      - KAFKA_REPLICA_FETCH_MAX_BYTES=103809024 # 99 * 1024 * 1024 B
+      - KAFKA_UNCLEAN_LEADER_ELECTION_ENABLE=false
+      - KAFKA_NUM_REPLICA_FETCHERS=1
+      - KAFKA_DEFAULT_REPLICATION_FACTOR=1
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper1:2181
+    ports:
+      - 9092:9092
+    depends_on:
+      - zookeeper1
+    networks:
+      - kafka
+
+  chainz_orderer1:
+    container_name: chainz_orderer1
+    image: hyperledger/fabric-orderer:$FABRIC_VERSION
+    environment:
+      - FABRIC_LOGGING_SPEC=debug
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_LISTENPORT=6050
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/etc/hyperledger/configtx/genesis.block
+      - ORDERER_GENERAL_LOCALMSPID=chainz
+      - ORDERER_GENERAL_LOCALMSPDIR=/etc/hyperledger/fabric/msp
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - ORDERER_GENERAL_TLS_PRIVATEKEY=/etc/hyperledger/fabric/tls/server.key
+      - ORDERER_GENERAL_TLS_CERTIFICATE=/etc/hyperledger/fabric/tls/server.crt
+      - ORDERER_GENERAL_TLS_ROOTCAS=[/etc/hyperledger/fabric/tls/ca.crt, /etc/hyperledger/skcc/tls/ca.crt, /etc/hyperledger/contractor1/tls/ca.crt]
+      - ORDERER_KAFKA_RETRY_SHORTINTERVAL=1s
+      - ORDERER_KAFKA_RETRY_SHORTTOTAL=30s
+      - ORDERER_KAFKA_VERBOSE=true
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderer
+    command: orderer
+    ports:
+      - 6050:6050
+    volumes:
+      - ./config/:/etc/hyperledger/configtx
+      - ./crypto-config/ordererOrganizations/chainz/orderers/chainz_orderer1/msp:/etc/hyperledger/fabric/msp
+      - ./crypto-config/ordererOrganizations/chainz/orderers/chainz_orderer1/tls:/etc/hyperledger/fabric/tls
+      - ./crypto-config/peerOrganizations/skcc/peers/skcc_peer1/tls:/etc/hyperledger/skcc/tls
+      - ./crypto-config/peerOrganizations/contractor1/peers/contractor1_peer1/tls:/etc/hyperledger/contractor1/tls
+    depends_on:
+      - kafka1
+    networks:
+      - kafka
+
+  chainz_orderer2:
+    container_name: chainz_orderer2
+    image: hyperledger/fabric-orderer:$FABRIC_VERSION
+    environment:
+      - FABRIC_LOGGING_SPEC=debug
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_LISTENPORT=7050
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/etc/hyperledger/configtx/genesis.block
+      - ORDERER_GENERAL_LOCALMSPID=chainz
+      - ORDERER_GENERAL_LOCALMSPDIR=/etc/hyperledger/fabric/msp
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - ORDERER_GENERAL_TLS_PRIVATEKEY=/etc/hyperledger/fabric/tls/server.key
+      - ORDERER_GENERAL_TLS_CERTIFICATE=/etc/hyperledger/fabric/tls/server.crt
+      - ORDERER_GENERAL_TLS_ROOTCAS=[/etc/hyperledger/fabric/tls/ca.crt, /etc/hyperledger/skcc/tls/ca.crt, /etc/hyperledger/contractor1/tls/ca.crt]
+      - ORDERER_KAFKA_RETRY_SHORTINTERVAL=1s
+      - ORDERER_KAFKA_RETRY_SHORTTOTAL=30s
+      - ORDERER_KAFKA_VERBOSE=true
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderer
+    command: orderer
+    ports:
+      - 7050:7050
+    volumes:
+      - ./config/:/etc/hyperledger/configtx
+      - ./crypto-config/ordererOrganizations/chainz/orderers/chainz_orderer2/msp:/etc/hyperledger/fabric/msp
+      - ./crypto-config/ordererOrganizations/chainz/orderers/chainz_orderer2/tls:/etc/hyperledger/fabric/tls
+      - ./crypto-config/peerOrganizations/skcc/peers/skcc_peer1/tls:/etc/hyperledger/skcc/tls
+      - ./crypto-config/peerOrganizations/contractor1/peers/contractor1_peer1/tls:/etc/hyperledger/contractor1/tls
+    depends_on:
+      - kafka1
+    networks:
+      - kafka
+
+  ca_skcc:
+    container_name: ca_skcc
+    image: hyperledger/fabric-ca:$FABRIC_VERSION
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca_skcc
+      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca/ca.skcc-cert.pem
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/ca/18cf80cec782092136b18a512bc1f6ab1704452cfece55ebdf3d4beadaf3e141_sk
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/tlsca/tlsca.skcc-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/tlsca/e52f4ec37b29581da0657c317a194fbf5f7a2ace398a4882a2efa7ea050308a0_sk
+    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+    ports:
+      - "7054:7054"
+    volumes:
+      - ./crypto-config/peerOrganizations/skcc/ca/:/etc/hyperledger/fabric-ca-server-config/ca
+      - ./crypto-config/peerOrganizations/skcc/tlsca/:/etc/hyperledger/fabric-ca-server-config/tlsca
+
+  skcc_peer1:
+    container_name: skcc_peer1
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=skcc_peer1
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
+      - CORE_PEER_ADDRESS=skcc_peer1:7051
+      - CORE_PEER_GOSSIP_ENDPOINT=skcc_peer1:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=skcc_peer1:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=skcc_peer1:7051
+      - CORE_PEER_CHAINCODELISTENADDRESS=skcc_peer1:7052
+      - CORE_PEER_CHAINCODEADDRESS=skcc_peer1:7052
+      - CORE_PEER_LOCALMSPID=skcc
+    ports:
+      - 7051:7051
+    volumes:
+      - ./crypto-config/peerOrganizations/skcc/peers/skcc_peer1/msp:/etc/hyperledger/fabric/msp
+      - ./crypto-config/peerOrganizations/skcc/peers/skcc_peer1/tls:/etc/hyperledger/fabric/tls
+    depends_on:
+      - chainz_orderer1
+    networks:
+      - kafka
+
+  skcc_peer2:
+    container_name: skcc_peer2
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=skcc_peer2
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:8051
+      - CORE_PEER_ADDRESS=skcc_peer2:8051
+      - CORE_PEER_GOSSIP_ENDPOINT=skcc_peer2:8051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=skcc_peer2:8051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=skcc_peer1:7051
+      - CORE_PEER_CHAINCODELISTENADDRESS=skcc_peer2:7052
+      - CORE_PEER_CHAINCODEADDRESS=skcc_peer2:7052
+      - CORE_PEER_LOCALMSPID=skcc
+    ports:
+      - 8051:8051
+    volumes:
+      - ./crypto-config/peerOrganizations/skcc/peers/skcc_peer2/msp:/etc/hyperledger/fabric/msp
+      - ./crypto-config/peerOrganizations/skcc/peers/skcc_peer2/tls:/etc/hyperledger/fabric/tls
+    depends_on:
+      - chainz_orderer1
+    networks:
+      - kafka
+
+  ca_contractor1:
+    container_name: ca_contractor1
+    image: hyperledger/fabric-ca:$FABRIC_VERSION
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca_contractor1
+      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca/ca.contractor1-cert.pem
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/ca/1b7ac8ee7477cd06ea0b300758bbd662233be0f637f31f906bd347cafc92b7c3_sk
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/tlsca/tlsca.contractor1-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/tlsca/63125feb562ffddb9b09271800d0728da4b72459cd87a833a0ca437280046e68_sk
+    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+    ports:
+      - "8054:7054"
+    volumes:
+      - ./crypto-config/peerOrganizations/contractor1/ca/:/etc/hyperledger/fabric-ca-server-config/ca
+      - ./crypto-config/peerOrganizations/contractor1/tlsca/:/etc/hyperledger/fabric-ca-server-config/tlsca
+
+  contractor1_peer1:
+    container_name: contractor1_peer1
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=contractor1_peer1
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:10051
+      - CORE_PEER_ADDRESS=contractor1_peer1:10051
+      - CORE_PEER_GOSSIP_ENDPOINT=contractor1_peer1:10051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=contractor1_peer1:10051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=contractor1_peer1:10051
+      - CORE_PEER_CHAINCODELISTENADDRESS=contractor1_peer1:7052
+      - CORE_PEER_CHAINCODEADDRESS=contractor1_peer1:7052
+      - CORE_PEER_LOCALMSPID=contractor1
+    ports:
+      - 10051:10051
+    volumes:
+      - ./crypto-config/peerOrganizations/contractor1/peers/contractor1_peer1/msp:/etc/hyperledger/fabric/msp
+      - ./crypto-config/peerOrganizations/contractor1/peers/contractor1_peer1/tls:/etc/hyperledger/fabric/tls
+    depends_on:
+      - chainz_orderer1
+    networks:
+      - kafka
+
+  contractor1_peer2:
+    container_name: contractor1_peer2
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=contractor1_peer2
+      - CORE_PEER_ADDRESS=contractor1_peer2:11051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:11051
+      - CORE_PEER_GOSSIP_ENDPOINT=contractor1_peer2:11051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=contractor1_peer2:11051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=contractor1_peer1:10051
+      - CORE_PEER_CHAINCODELISTENADDRESS=contractor1_peer2:7052
+      - CORE_PEER_CHAINCODEADDRESS=contractor1_peer2:7052
+      - CORE_PEER_LOCALMSPID=contractor1
+    ports:
+      - 11051:11051
+    volumes:
+      - ./crypto-config/peerOrganizations/contractor1/peers/contractor1_peer2/msp:/etc/hyperledger/fabric/msp
+      - ./crypto-config/peerOrganizations/contractor1/peers/contractor1_peer2/tls:/etc/hyperledger/fabric/tls
+    depends_on:
+      - chainz_orderer1
+    networks:
+      - kafka

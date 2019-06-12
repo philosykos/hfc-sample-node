@@ -1,0 +1,67 @@
+#
+# Copyright IBM Corp All Rights Reserved
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+version: '2'
+
+networks:
+  raft:
+
+services:
+  chainz3_orderer1:
+    container_name: chainz3_orderer1
+    extends:
+      file: orderer-base.yaml
+      service: orderer-base
+    environment:
+      - ORDERER_GENERAL_LISTENPORT=10050
+    ports:
+      - 10050:10050
+    volumes:
+      - ./crypto-config/ordererOrganizations/chainz/orderers/chainz3_orderer1/msp:/etc/hyperledger/fabric/msp
+      - ./crypto-config/ordererOrganizations/chainz/orderers/chainz3_orderer1/tls:/etc/hyperledger/fabric/tls
+    networks:
+      - raft
+
+  chainz3_orderer2:
+    container_name: chainz3_orderer2
+    extends:
+      file: orderer-base.yaml
+      service: orderer-base
+    environment:
+      - ORDERER_GENERAL_LISTENPORT=11050
+    ports:
+      - 11050:11050
+    volumes:
+      - ./crypto-config/ordererOrganizations/chainz/orderers/chainz3_orderer2/msp:/etc/hyperledger/fabric/msp
+      - ./crypto-config/ordererOrganizations/chainz/orderers/chainz3_orderer2/tls:/etc/hyperledger/fabric/tls
+    networks:
+      - raft
+
+  contractor1_cli:
+    container_name: contractor1_cli
+    image: hyperledger/fabric-tools:$FABRIC_VERSION
+    tty: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - FABRIC_LOGGING_SPEC=info
+      - CORE_PEER_ID=contractor1_cli
+      - CORE_PEER_ADDRESS=contractor1_peer3:12051
+      - CORE_PEER_LOCALMSPID=contractor1
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/contractor1/users/Admin@contractor1/msp
+      - CORE_CHAINCODE_KEEPALIVE=10
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/contractor1/peers/contractor1_peer3/tls/server.key
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/contractor1/peers/contractor1_peer3/tls/server.crt
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/contractor1/peers/contractor1_peer3/tls/ca.crt
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../chaincode/:/opt/gopath/src/github.com/chaincode
+      - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+      - ./config:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    networks:
+      - raft

@@ -1,0 +1,722 @@
+swagger: "2.0"
+info:
+  version: 1.4.0
+  title: HFC Sample for node.js
+  description: Hyperledger Fabric Client sample for node.js providing swagger REST APIs
+basePath: /api
+tags:
+  - name: Admin
+    description: Manage Channel & Chaincode APIs
+  - name: Member
+    description: Query & Invoke APIs
+  - name: Common
+    description: Wallet & Event APIs
+  - name: Sample
+    description: Sample Chaincode APIs
+  - name: Specification
+    description: The swagger API specification
+
+consumes:
+  - application/json
+produces:
+  - application/json
+
+paths:
+  /common/createWallet:
+    get:
+      tags:
+        - Common
+      description: Create wallet
+      parameters:
+        - name: mspId
+          in: query
+          description: mspId
+          required: true
+          type: string
+          default: 'skcc'
+        - name: userName
+          in: query
+          description: userName
+          required: true
+          type: string
+          default: 'Admin'
+      responses:
+        200:
+          description: Returns Sucess Code & Message
+  /admin/createChannel:
+    post:
+      tags:
+        - Admin
+      description: Create new channel
+      parameters:
+        - name: Channel
+          in: body
+          description: Create channel parameters
+          required: true
+          schema:
+            $ref: "#/definitions/Channel"
+      responses:
+        200:
+          description: Returns Sucess Code & Message
+  /admin/joinChannel:
+    post:
+      tags:
+        - Admin
+      description: Join peers to channel
+      parameters:
+        - name: JoinChannel
+          in: body
+          description: Join channel parameters
+          required: true
+          schema:
+            $ref: "#/definitions/JoinChannel"
+      responses:
+        200:
+          description: Returns Sucess Code & Message
+  /admin/updateChannel:
+    post:
+      tags:
+        - Admin
+      description: Update channel configuration
+      parameters:
+        - name: Channel
+          in: body
+          description: Update channel parameters
+          required: true
+          schema:
+            $ref: "#/definitions/Channel"
+      responses:
+        200:
+          description: Returns Sucess Code & Message
+  /admin/installChaincode:
+    post:
+      tags:
+        - Admin
+      description: Install chaincode
+      parameters:
+        - name: Chaincode
+          in: body
+          description: Install chaincode parameters
+          required: true
+          schema:
+            $ref: "#/definitions/Chaincode"
+      responses:
+        200:
+          description: Returns Sucess Code & Message
+  /admin/installChaincodePackage:
+    post:
+      tags:
+        - Admin
+      description: Install chaincode package
+      parameters:
+        - name: Chaincode
+          in: body
+          description: Install chaincode parameters
+          required: true
+          schema:
+            $ref: "#/definitions/Chaincode"
+      responses:
+        200:
+          description: Returns Sucess Code & Message
+  /admin/instantiateChaincode:
+    post:
+      tags:
+        - Admin
+      description: Instantiate chaincode
+      parameters:
+        - name: InstantiateChaincode
+          in: body
+          description: Instantiate chaincode parameters
+          required: true
+          schema:
+            $ref: "#/definitions/InstantiateChaincode"
+      responses:
+        200:
+          description: Returns Sucess Code & Message
+  /admin/upgradeChaincode:
+    post:
+      tags:
+        - Admin
+      description: Upgrade chaincode
+      parameters:
+        - name: UpgradeChaincode
+          in: body
+          description: Upgrade chaincode parameters
+          required: true
+          schema:
+            $ref: "#/definitions/UpgradeChaincode"
+      responses:
+        200:
+          description: Returns Sucess Code & Message
+  /member/queryChaincode:
+      post:
+        tags:
+          - Member
+        description: Query chaincode
+        parameters:
+          - name: QueryChaincode
+            in: body
+            description: Query chaincode parameters
+            required: true
+            schema:
+              $ref: "#/definitions/QueryChaincode"
+        responses:
+          200:
+            description: Returns Sucess Code & Message
+  /member/invokeChaincode:
+      post:
+        tags:
+          - Member
+        description: Invoke chaincode
+        parameters:
+          - name: InvokeChaincode
+            in: body
+            description: Invoke chaincode parameters
+            required: true
+            schema:
+              $ref: "#/definitions/InvokeChaincode"
+        responses:
+          200:
+            description: Returns Sucess Code & Message
+  /member/queryBlockByNumber:
+      post:
+        tags:
+          - Member
+        description: Query block by number
+        parameters:
+          - name: BlockByNumber
+            in: body
+            description: Query block by number parameters
+            required: true
+            schema:
+              $ref: "#/definitions/BlockByNumber"
+        responses:
+          200:
+            description: Returns Sucess Code & Message
+  /member/queryTransactionById:
+      post:
+        tags:
+          - Member
+        description: Query transaction by ID
+        parameters:
+          - name: TransactionById
+            in: body
+            description: Query transaction by ID parameters
+            required: true
+            schema:
+              $ref: "#/definitions/TransactionById"
+        responses:
+          200:
+            description: Returns Sucess Code & Message
+  /member/queryBlockByHash:
+      post:
+        tags:
+          - Member
+        description: Query block by hash by ID
+        parameters:
+          - name: BlockByHash
+            in: body
+            description: Query block by hash parameters
+            required: true
+            schema:
+              $ref: "#/definitions/BlockByHash"
+        responses:
+          200:
+            description: Returns Sucess Code & Message
+  /member/queryChainInfo:
+      post:
+        tags:
+          - Member
+        description: Query chain info
+        parameters:
+          - name: ChainInfo
+            in: body
+            description: Query chain info parameters
+            required: true
+            schema:
+              $ref: "#/definitions/ChainInfo"
+        responses:
+          200:
+            description: Returns Sucess Code & Message
+  /member/queryInstalledChaincodes:
+      post:
+        tags:
+          - Member
+        description: Query installed chaincode
+        parameters:
+          - name: ChainInfo
+            in: body
+            description: Query installed chaincode parameters
+            required: true
+            schema:
+              $ref: "#/definitions/ChainInfo"
+        responses:
+          200:
+            description: Returns Sucess Code & Message
+  /member/queryInstantiatedChaincodes:
+      post:
+        tags:
+          - Member
+        description: Query instantiated chaincode
+        parameters:
+          - name: ChainInfo
+            in: body
+            description: Query instantiated chaincode parameters
+            required: true
+            schema:
+              $ref: "#/definitions/ChainInfo"
+        responses:
+          200:
+            description: Returns Sucess Code & Message
+  /member/queryChannels:
+      post:
+        tags:
+          - Member
+        description: Query channel list
+        parameters:
+          - name: ChainInfo
+            in: body
+            description: Query channel list parameters
+            required: true
+            schema:
+              $ref: "#/definitions/ChannelList"
+        responses:
+          200:
+            description: Returns Sucess Code & Message
+  /sample/queryWithRolling:
+    get:
+      tags:
+        - Sample
+      description: query
+      parameters:
+        - name: userId
+          in: query
+          description: userId
+          required: true
+          type: string
+          default: 'skcc_user1'
+      responses:
+        200:
+          description: Returns Sucess Code & Message
+  /sample/queryWithDiscovery:
+    get:
+      tags:
+        - Sample
+      description: query
+      parameters:
+        - name: userId
+          in: query
+          description: userId
+          required: true
+          type: string
+          default: 'skcc_user1'
+      responses:
+        200:
+          description: Returns Sucess Code & Message
+  /sample/queryWithContract:
+    get:
+      tags:
+        - Sample
+      description: query
+      parameters:
+        - name: userId
+          in: query
+          description: userId
+          required: true
+          type: string
+          default: 'skcc_user1'
+      responses:
+        200:
+          description: Returns Sucess Code & Message
+  /sample/invokeWithContract:
+    post:
+      tags:
+        - Sample
+      description: query
+      parameters:
+        - name: from
+          in: query
+          description: from
+          required: true
+          type: string
+          default: 'skcc_user1'
+        - name: to
+          in: query
+          description: from
+          required: true
+          type: string
+          default: 'skcc_user1'
+        - name: value
+          in: query
+          description: from
+          required: true
+          type: string
+          default: '1000'
+      responses:
+        200:
+          description: Returns Sucess Code & Message
+  /spec:
+    get:
+      tags:
+        - Specification
+      responses:
+        200:
+          description: Return the API specification
+
+definitions:
+  Channel:
+    type: object
+    title: Channel
+    required:
+      - channelName
+      - channelConfigPath
+      - mspId
+      - userName
+    properties:
+      channelName:
+        type: string
+        example: 'skcc-channel'
+      channelConfigPath:
+        type: string
+        example: '/network/kafka-network/config/skcc-channel.tx'
+      mspId:
+        type: string
+        example: 'skcc'
+      userName:
+        type: string
+        example: 'Admin'
+  JoinChannel:
+    type: object
+    title: JoinChannel
+    required:
+      - channelName
+      - peers
+      - mspId
+      - userName
+    properties:
+      channelName:
+        type: string
+        example: 'skcc-channel'
+      peers:
+        type: array
+        items:
+          type: string
+        example: ['skcc_peer1']
+      mspId:
+        type: string
+        example: 'skcc'
+      userName:
+        type: string
+        example: 'Admin'
+  Chaincode:
+    type: object
+    title: Chaincode
+    required:
+      - peers
+      - chaincodeName
+      - chaincodePath
+      - chaincodeVersion
+      - chaincodeType
+      - mspId
+      - userName
+    properties:
+      peers:
+        type: array
+        items:
+          type: 'string'
+        example: ['skcc_peer1']
+      chaincodeName:
+        type: string
+        example: 'sample'
+      chaincodePath:
+        type: string
+        example: 'github.com/chaincode/chaincode_example02/go'
+      chaincodeVersion:
+        type: string
+        example: '1.0'
+      chaincodeType:
+        type: string
+        example: 'golang'
+      mspId:
+        type: string
+        example: 'skcc'
+      userName:
+        type: string
+        example: 'Admin'
+  InstantiateChaincode:
+    type: object
+    title: InstantiateChaincode
+    required:
+      - peers
+      - channelName
+      - chaincodeName
+      - chaincodeVersion
+      - chaincodeType
+      - fcn
+      - args
+      - mspId
+      - userName
+    properties:
+      peers:
+        type: array
+        items:
+          type: 'string'
+        example: ['skcc_peer1', 'contractor1_peer1']
+      channelName:
+        type: string
+        example: 'skcc-channel'
+      chaincodeName:
+        type: string
+        example: 'sample'
+      chaincodeVersion:
+        type: string
+        example: '1.0'
+      chaincodeType:
+        type: string
+        example: 'golang'
+      fcn:
+        type: string
+        example: 'init'
+      args:
+        type: array
+        items:
+          type: 'string'
+        example: ['a', '200', 'b', '100']
+      mspId:
+        type: string
+        example: 'skcc'
+      userName:
+        type: string
+        example: 'Admin'
+  UpgradeChaincode:
+    type: object
+    title: UpgradeChaincode
+    required:
+      - peers
+      - channelName
+      - chaincodeName
+      - chaincodeVersion
+      - chaincodeType
+      - fcn
+      - args
+      - mspId
+      - userName
+    properties:
+      peers:
+        type: array
+        items:
+          type: string
+        example: ['skcc_peer1', 'contractor1_peer1']
+      channelName:
+        type: string
+        example: 'skcc-channel'
+      chaincodeName:
+        type: string
+        example: 'sample'
+      chaincodeVersion:
+        type: string
+        example: '1.1'
+      chaincodeType:
+        type: string
+        example: 'golang'
+      fcn:
+        type: string
+        example: 'init'
+      args:
+        type: array
+        items:
+          type: string
+        example: ['c', '400', 'd', '300']
+      mspId:
+        type: string
+        example: 'skcc'
+      userName:
+        type: string
+        example: 'Admin'
+  QueryChaincode:
+    type: object
+    title: QueryChaincode
+    required:
+      - peers
+      - channelName
+      - chaincodeName
+      - fcn
+      - args
+      - mspId
+      - userName
+    properties:
+      peers:
+        type: array
+        items:
+          type: string
+        example: ['skcc_peer1']
+      channelName:
+        type: string
+        example: 'skcc-channel'
+      chaincodeName:
+        type: string
+        example: 'sample'
+      fcn:
+        type: string
+        example: 'query'
+      args:
+        type: array
+        items:
+          type: string
+        example: ['a']
+      mspId:
+        type: string
+        example: 'skcc'
+      userName:
+        type: string
+        example: 'User1'
+  InvokeChaincode:
+    type: object
+    title: InvokeChaincode
+    required:
+      - peers
+      - channelName
+      - chaincodeName
+      - fcn
+      - args
+      - mspId
+      - userName
+    properties:
+      peers:
+        type: array
+        items:
+          type: string
+        example: ['skcc_peer1', 'contractor1_peer1']
+      channelName:
+        type: string
+        example: 'skcc-channel'
+      chaincodeName:
+        type: string
+        example: 'sample'
+      fcn:
+        type: string
+        example: 'invoke'
+      args:
+        type: array
+        items:
+          type: string
+        example: ['a', 'b', '10']
+      mspId:
+        type: string
+        example: 'skcc'
+      userName:
+        type: string
+        example: 'User1'
+  BlockByNumber:
+    type: object
+    title: BlockByNumber
+    required:
+      - peer
+      - channelName
+      - blockNumber
+      - mspId
+      - userName
+    properties:
+      peer:
+        type: string
+        example: 'skcc_peer1'
+      channelName:
+        type: string
+        example: 'skcc-channel'
+      blockNumber:
+        type: string
+        example: '1'
+      mspId:
+        type: string
+        example: 'skcc'
+      userName:
+        type: string
+        example: 'User1'
+  TransactionById:
+    type: object
+    title: TransactionById
+    required:
+      - peer
+      - channelName
+      - txId
+      - mspId
+      - userName
+    properties:
+      peer:
+        type: string
+        example: 'skcc_peer1'
+      channelName:
+        type: string
+        example: 'skcc-channel'
+      txId:
+        type: string
+        example: '977e688cc0ef9cb973dafbec5c0ecedfad7cf6518b8990112b6f794296d19275'
+      mspId:
+        type: string
+        example: 'skcc'
+      userName:
+        type: string
+        example: 'User1'
+  BlockByHash:
+    type: object
+    title: BlockByHash
+    required:
+      - peer
+      - channelName
+      - blockHash
+      - mspId
+      - userName
+    properties:
+      peer:
+        type: string
+        example: 'skcc_peer1'
+      channelName:
+        type: string
+        example: 'skcc-channel'
+      blockHash:
+        type: string
+        example: 'be9cd91ee8f1929442b7bb63fbc3c2147487dedd4a43ba1651ff59c2257c824c'
+      mspId:
+        type: string
+        example: 'skcc'
+      userName:
+        type: string
+        example: 'User1'
+  ChainInfo:
+    type: object
+    title: ChainInfo
+    required:
+      - peer
+      - channelName
+      - mspId
+      - userName
+    properties:
+      peer:
+        type: string
+        example: 'skcc_peer1'
+      channelName:
+        type: string
+        example: 'skcc-channel'
+      mspId:
+        type: string
+        example: 'skcc'
+      userName:
+        type: string
+        example: 'Admin'
+  ChannelList:
+    type: object
+    title: ChannelList
+    required:
+      - peer
+      - mspId
+      - userName
+    properties:
+      peer:
+        type: string
+        example: 'skcc_peer1'
+      mspId:
+        type: string
+        example: 'skcc'
+      userName:
+        type: string
+        example: 'Admin'

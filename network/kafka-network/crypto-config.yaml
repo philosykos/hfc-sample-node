@@ -1,0 +1,34 @@
+OrdererOrgs:
+  - Name: chainz
+    Domain: chainz
+    Specs:
+      - Hostname: chainz_orderer1
+        CommonName: chainz_orderer1
+      - Hostname: chainz_orderer2
+        CommonName: chainz_orderer2
+PeerOrgs:
+  - Name: skcc
+    Domain: skcc
+    EnableNodeOUs: true
+    Specs:
+      - Hostname: skcc_peer1
+        CommonName: skcc_peer1
+      - Hostname: skcc_peer2
+        CommonName: skcc_peer2
+      - Hostname: skcc_peer3
+        CommonName: skcc_peer3
+    Users:
+      Count: 1
+  - Name: contractor1
+    Domain: contractor1
+    EnableNodeOUs: true
+    Specs:
+      - Hostname: contractor1_peer1
+        CommonName: contractor1_peer1
+      - Hostname: contractor1_peer2
+        CommonName: contractor1_peer2
+      - Hostname: contractor1_peer3
+        CommonName: contractor1_peer3
+    Users:
+      Count: 1
+

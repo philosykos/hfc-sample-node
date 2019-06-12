@@ -1,0 +1,28 @@
+{
+    "parser": "babel-eslint",
+//    "extends": ["eslint:recommended", "plugin:node/recommended", "prettier"],
+    "extends": ["standard", "standard-jsx"],
+    "env": {
+      "mocha": true
+    },
+//    "plugins": ["prettier", "node"],
+    "plugins": ["node"],
+    "rules": {
+      "no-trailing-spaces": [0],
+      "no-unused-vars": 2,
+      "node/no-unsupported-features": 0,
+      "indent": [2]
+//      "prettier/prettier": [
+//        "error",
+//        {
+//          "indent": [2, "tab"],
+//          "singleQuote": true,
+//          "trailingComma": "all",
+//          "semi": false,
+//          "bracketSpacing": true,
+//          "jsxBracketSameLine": true,
+//          "printWidth": 80
+//        }
+//      ]
+    }
+  }
