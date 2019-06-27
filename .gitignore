@@ -2,6 +2,8 @@ node_modules
 dist
 .env
 .DS_Store
+network/test-network/crypto-config/*
+network/test-network/config/*
 network/kafka-network/crypto-config/*
 network/kafka-network/config/*
 network/raft-network/crypto-config/*
