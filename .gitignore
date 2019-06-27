@@ -3,6 +3,10 @@ dist
 .env
 .DS_Store
 network/kafka-network/crypto-config/*
+network/kafka-network/config/*
 network/raft-network/crypto-config/*
+network/raft-network/config/*
 network/raft-network2/crypto-config/*
+network/raft-network2/config/*
 wallet/*
+.idea/*

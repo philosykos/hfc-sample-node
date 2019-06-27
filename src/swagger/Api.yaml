@@ -378,7 +378,7 @@ definitions:
         example: 'skcc-channel'
       channelConfigPath:
         type: string
-        example: '/network/kafka-network/config/skcc-channel.tx'
+        example: '/network/raft-network/config/skcc-channel.tx'
       mspId:
         type: string
         example: 'skcc'

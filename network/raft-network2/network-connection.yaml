@@ -61,28 +61,28 @@ orderers:
     grpcOptions:
       ssl-target-name-override: chainz1_orderer1
     tlsCACerts:
-      path: network/kafka-network/crypto-config/ordererOrganizations/chainz/orderers/chainz1_orderer1/tls/ca.crt
+      path: network/raft-network2/crypto-config/ordererOrganizations/chainz/orderers/chainz1_orderer1/tls/ca.crt
 
   chainz1_orderer2:
     url: grpcs://localhost:7050
     grpcOptions:
       ssl-target-name-override: chainz1_orderer2
     tlsCACerts:
-      path: network/kafka-network/crypto-config/ordererOrganizations/chainz/orderers/chainz1_orderer2/tls/ca.crt
+      path: network/raft-network2/crypto-config/ordererOrganizations/chainz/orderers/chainz1_orderer2/tls/ca.crt
 
   chainz2_orderer1:
     url: grpcs://localhost:8050
     grpcOptions:
       ssl-target-name-override: chainz2_orderer1
     tlsCACerts:
-      path: network/kafka-network/crypto-config/ordererOrganizations/chainz/orderers/chainz2_orderer1/tls/ca.crt
+      path: network/raft-network2/crypto-config/ordererOrganizations/chainz/orderers/chainz2_orderer1/tls/ca.crt
 
   chainz2_orderer2:
     url: grpcs://localhost:9050
     grpcOptions:
       ssl-target-name-override: chainz2_orderer2
     tlsCACerts:
-      path: network/kafka-network/crypto-config/ordererOrganizations/chainz/orderers/chainz2_orderer2/tls/ca.crt
+      path: network/raft-network2/crypto-config/ordererOrganizations/chainz/orderers/chainz2_orderer2/tls/ca.crt
 
 peers:
   skcc_peer1:
@@ -91,7 +91,7 @@ peers:
       ssl-target-name-override: skcc_peer1
       request-timeout: 120
     tlsCACerts:
-      path: network/kafka-network/crypto-config/peerOrganizations/skcc/peers/skcc_peer1/tls/ca.crt
+      path: network/raft-network2/crypto-config/peerOrganizations/skcc/peers/skcc_peer1/tls/ca.crt
 
   skcc_peer2:
     url: grpcs://localhost:8051
@@ -99,7 +99,7 @@ peers:
       ssl-target-name-override: skcc_peer2
       request-timeout: 120
     tlsCACerts:
-      path: network/kafka-network/crypto-config/peerOrganizations/skcc/peers/skcc_peer2/tls/ca.crt
+      path: network/raft-network2/crypto-config/peerOrganizations/skcc/peers/skcc_peer2/tls/ca.crt
 
   contractor1_peer1:
     url: grpcs://localhost:10051
@@ -107,7 +107,7 @@ peers:
       ssl-target-name-override: contractor1_peer1
       request-timeout: 120
     tlsCACerts:
-      path: network/kafka-network/crypto-config/peerOrganizations/contractor1/peers/contractor1_peer1/tls/ca.crt
+      path: network/raft-network2/crypto-config/peerOrganizations/contractor1/peers/contractor1_peer1/tls/ca.crt
 
   contractor1_peer2:
     url: grpcs://localhost:11051
@@ -115,7 +115,7 @@ peers:
       ssl-target-name-override: contractor1_peer2
       request-timeout: 120
     tlsCACerts:
-      path: network/kafka-network/crypto-config/peerOrganizations/contractor1/peers/contractor1_peer2/tls/ca.crt
+      path: network/raft-network2/crypto-config/peerOrganizations/contractor1/peers/contractor1_peer2/tls/ca.crt
 
 certificateAuthorities:
   ca_skcc:
@@ -123,7 +123,7 @@ certificateAuthorities:
     httpOptions:
       verify: false
     tlsCACerts:
-      path: network/kafka-network/crypto-config/peerOrganizations/skcc/ca/ca.skcc-cert.pem
+      path: network/raft-network2/crypto-config/peerOrganizations/skcc/ca/ca.skcc-cert.pem
     registrar:
       - enrollId: admin
         enrollSecret: adminpw
@@ -134,7 +134,7 @@ certificateAuthorities:
     httpOptions:
       verify: false
     tlsCACerts:
-      path: network/kafka-network/crypto-config/peerOrganizations/contractor1/ca/ca.contractor1-cert.pem
+      path: network/raft-network2/crypto-config/peerOrganizations/contractor1/ca/ca.contractor1-cert.pem
     registrar:
       - enrollId: admin
         enrollSecret: adminpw
