@@ -71,7 +71,7 @@ services:
 
   ca_skcc:
     container_name: ca_skcc
-    image: hyperledger/fabric-ca:1.4.0
+    image: hyperledger/fabric-ca:$FABRIC_VERSION
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca_skcc
@@ -139,7 +139,7 @@ services:
 
   ca_contractor1:
     container_name: ca_contractor1
-    image: hyperledger/fabric-ca:1.4.0
+    image: hyperledger/fabric-ca:$FABRIC_VERSION
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca_contractor1
