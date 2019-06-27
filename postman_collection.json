@@ -1,0 +1,1096 @@
+{
+	"info": {
+		"_postman_id": "510f3f65-7664-458e-a81d-5ce5b01b8c31",
+		"name": "hfc-sample-node",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. admin",
+			"item": [
+				{
+					"name": "createChannel",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"channelName\": \"skcc-channel\",\n  \"channelConfigPath\": \"/network/kafka-network/config/skcc-channel.tx\",\n  \"mspId\": \"skcc\",\n  \"userName\": \"Admin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/admin/createChannel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"admin",
+								"createChannel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "joinChannel_skcc",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"channelName\": \"skcc-channel\",\n  \"peers\": [\n    \"skcc_peer1\", \"skcc_peer2\"\n  ],\n  \"mspId\": \"skcc\",\n  \"userName\": \"Admin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/admin/joinChannel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"admin",
+								"joinChannel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "joinChannel_contractor1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"channelName\": \"skcc-channel\",\n  \"peers\": [\n    \"contractor1_peer1\", \"contractor1_peer2\"\n  ],\n  \"mspId\": \"contractor1\",\n  \"userName\": \"Admin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/admin/joinChannel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"admin",
+								"joinChannel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateAnchorPeers_skcc",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"channelName\": \"skcc-channel\",\n  \"channelConfigPath\": \"/network/kafka-network/config/skccAnchors.tx\",\n  \"mspId\": \"skcc\",\n  \"userName\": \"Admin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/admin/updateChannel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"admin",
+								"updateChannel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateAnchorPeers_contractor1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"channelName\": \"skcc-channel\",\n  \"channelConfigPath\": \"/network/kafka-network/config/contractor1Anchors.tx\",\n  \"mspId\": \"contractor1\",\n  \"userName\": \"Admin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/admin/updateChannel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"admin",
+								"updateChannel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "installChaincode_skcc",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"peers\": [\n    \"skcc_peer1\", \"skcc_peer2\"\n  ],\n  \"chaincodeName\": \"sample\",\n  \"chaincodePath\": \"github.com/chaincode/chaincode_example02/go\",\n  \"chaincodeVersion\": \"1.0\",\n  \"chaincodeType\": \"golang\",\n  \"mspId\": \"skcc\",\n  \"userName\": \"Admin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/admin/installChaincode",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"admin",
+								"installChaincode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "installChaincode_contractor1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"peers\": [\n    \"contractor1_peer1\", \"contractor1_peer2\"\n  ],\n  \"chaincodeName\": \"sample\",\n  \"chaincodePath\": \"github.com/chaincode/chaincode_example02/go\",\n  \"chaincodeVersion\": \"1.0\",\n  \"chaincodeType\": \"golang\",\n  \"mspId\": \"contractor1\",\n  \"userName\": \"Admin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/admin/installChaincode",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"admin",
+								"installChaincode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "instantiateChaincode",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"peers\": [\n    \"skcc_peer1\",\n    \"contractor1_peer1\"\n  ],\n  \"channelName\": \"skcc-channel\",\n  \"chaincodeName\": \"sample\",\n  \"chaincodeVersion\": \"1.0\",\n  \"chaincodeType\": \"golang\",\n  \"fcn\": \"init\",\n  \"args\": [\n    \"a\",\n    \"200\",\n    \"b\",\n    \"100\"\n  ],\n  \"mspId\": \"skcc\",\n  \"userName\": \"Admin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/admin/instantiateChaincode",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"admin",
+								"instantiateChaincode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upgradeChaincode",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"peers\": [\n    \"skcc_peer1\",\n    \"contractor1_peer1\"\n  ],\n  \"channelName\": \"skcc-channel\",\n  \"chaincodeName\": \"sample\",\n  \"chaincodeVersion\": \"1.1\",\n  \"chaincodeType\": \"golang\",\n  \"fcn\": \"init\",\n  \"args\": [\n    \"c\",\n    \"400\",\n    \"d\",\n    \"300\"\n  ],\n  \"mspId\": \"skcc\",\n  \"userName\": \"Admin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/admin/upgradeChaincode",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"admin",
+								"upgradeChaincode"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2. member",
+			"item": [
+				{
+					"name": "queryChaincode",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"peers\": [\n    \"contractor1_peer1\"\n  ],\n  \"channelName\": \"skcc-channel\",\n  \"chaincodeName\": \"sample\",\n  \"fcn\": \"query\",\n  \"args\": [\n    \"a\"\n  ],\n  \"mspId\": \"skcc\",\n  \"userName\": \"User1\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/member/queryChaincode",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"member",
+								"queryChaincode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "invokeChaincode",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"peers\": [\n    \"skcc_peer1\",\n    \"contractor1_peer1\"\n  ],\n  \"channelName\": \"skcc-channel\",\n  \"chaincodeName\": \"sample\",\n  \"fcn\": \"invoke\",\n  \"args\": [\n    \"a\",\n    \"b\",\n    \"10\"\n  ],\n  \"mspId\": \"skcc\",\n  \"userName\": \"User1\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/member/invokeChaincode",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"member",
+								"invokeChaincode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "queryBlockByNumber",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"peer\": \"skcc_peer1\",\n  \"channelName\": \"skcc-channel\",\n  \"blockNumber\": \"1\",\n  \"mspId\": \"skcc\",\n  \"userName\": \"User1\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/member/queryBlockByNumber",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"member",
+								"queryBlockByNumber"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "queryTransactionById",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"peer\": \"skcc_peer1\",\n  \"channelName\": \"skcc-channel\",\n  \"txId\": \"977e688cc0ef9cb973dafbec5c0ecedfad7cf6518b8990112b6f794296d19275\",\n  \"mspId\": \"skcc\",\n  \"userName\": \"User1\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/member/queryTransactionById",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"member",
+								"queryTransactionById"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "queryBlockByHash",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"peer\": \"skcc_peer1\",\n  \"channelName\": \"skcc-channel\",\n  \"blockHash\": \"be9cd91ee8f1929442b7bb63fbc3c2147487dedd4a43ba1651ff59c2257c824c\",\n  \"mspId\": \"skcc\",\n  \"userName\": \"User1\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/member/queryBlockByHash",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"member",
+								"queryBlockByHash"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "queryChannels",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"peer\": \"skcc_peer1\",\n  \"channelName\": \"skcc-channel\",\n  \"mspId\": \"skcc\",\n  \"userName\": \"User1\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/member/queryChannels",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"member",
+								"queryChannels"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "queryChainInfo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"peer\": \"skcc_peer1\",\n  \"channelName\": \"skcc-channel\",\n  \"mspId\": \"skcc\",\n  \"userName\": \"User1\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/member/queryChainInfo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"member",
+								"queryChainInfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "queryInstalledChaincodes",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"peer\": \"skcc_peer1\",\n  \"channelName\": \"skcc-channel\",\n  \"mspId\": \"skcc\",\n  \"userName\": \"Admin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/member/queryInstalledChaincodes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"member",
+								"queryInstalledChaincodes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "queryInstantiatedChaincodes",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"peer\": \"skcc_peer1\",\n  \"channelName\": \"skcc-channel\",\n  \"mspId\": \"skcc\",\n  \"userName\": \"Admin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/member/queryInstantiatedChaincodes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"member",
+								"queryInstantiatedChaincodes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3. advanced",
+			"item": [
+				{
+					"name": "createChannel_error",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"channelName\": \"skccChannel\",\n  \"channelConfigPath\": \"/network/kafka-network/config/skccChannel.tx\",\n  \"mspId\": \"skcc\",\n  \"userName\": \"Admin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/admin/createChannel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"admin",
+								"createChannel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createChannel_ch2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"channelName\": \"skcc-channel2\",\n  \"channelConfigPath\": \"/network/kafka-network/config/skcc-channel2.tx\",\n  \"mspId\": \"skcc\",\n  \"userName\": \"Admin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/admin/createChannel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"admin",
+								"createChannel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "joinChannel2_skcc",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"channelName\": \"skcc-channel2\",\n  \"peers\": [\n    \"skcc_peer1\", \"skcc_peer2\"\n  ],\n  \"mspId\": \"skcc\",\n  \"userName\": \"Admin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/admin/joinChannel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"admin",
+								"joinChannel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "joinChannel2_contractor1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"channelName\": \"skcc-channel2\",\n  \"peers\": [\n    \"contractor1_peer1\", \"contractor1_peer2\"\n  ],\n  \"mspId\": \"contractor1\",\n  \"userName\": \"Admin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/admin/joinChannel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"admin",
+								"joinChannel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateAnchorPeers_skcc_ch2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"channelName\": \"skcc-channel2\",\n  \"channelConfigPath\": \"/network/kafka-network/config/skccAnchors_ch2.tx\",\n  \"mspId\": \"skcc\",\n  \"userName\": \"Admin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/admin/updateChannel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"admin",
+								"updateChannel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateAnchorPeers_contractor1_ch2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"channelName\": \"skcc-channel2\",\n  \"channelConfigPath\": \"/network/kafka-network/config/contractor1Anchors_ch2.tx\",\n  \"mspId\": \"contractor1\",\n  \"userName\": \"Admin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/admin/updateChannel",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"admin",
+								"updateChannel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "installChaincodePackage_skcc",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"peers\": [\n    \"skcc_peer1\", \"skcc_peer2\"\n  ],\n  \"chaincodeName\": \"sample2\",\n  \"chaincodePath\": \"github.com/chaincode/chaincode_example02/go\",\n  \"chaincodeVersion\": \"1.0\",\n  \"chaincodeType\": \"golang\",\n  \"mspId\": \"skcc\",\n  \"userName\": \"Admin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/admin/installChaincodePackage",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"admin",
+								"installChaincodePackage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "installChaincodePackage_contractor1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"peers\": [\n    \"contractor1_peer1\", \"contractor1_peer2\"\n  ],\n  \"chaincodeName\": \"sample2\",\n  \"chaincodePath\": \"github.com/chaincode/chaincode_example02/go\",\n  \"chaincodeVersion\": \"1.0\",\n  \"chaincodeType\": \"golang\",\n  \"mspId\": \"contractor1\",\n  \"userName\": \"Admin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/admin/installChaincodePackage",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"admin",
+								"installChaincodePackage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "instantiateChaincode_ch2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"peers\": [\n    \"skcc_peer1\", \"skcc_peer2\", \"contractor1_peer1\", \"contractor1_peer2\"\n  ],\n  \"channelName\": \"skcc-channel2\",\n  \"chaincodeName\": \"sample2\",\n  \"chaincodeVersion\": \"1.0\",\n  \"chaincodeType\": \"golang\",\n  \"fcn\": \"init\",\n  \"args\": [\n    \"skcc_user1\",\n    \"10000\",\n    \"contractor1_user1\",\n    \"10000\"\n  ],\n  \"mspId\": \"skcc\",\n  \"userName\": \"Admin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/admin/instantiateChaincode",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"admin",
+								"instantiateChaincode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "queryChaincode",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"peers\": [\n    \"skcc_peer1\", \"skcc_peer2\", \"contractor1_peer1\", \"contractor1_peer2\"\n  ],\n  \"channelName\": \"skcc-channel2\",\n  \"chaincodeName\": \"sample2\",\n  \"fcn\": \"query\",\n  \"args\": [\n    \"skcc_user1\"\n  ],\n  \"mspId\": \"skcc\",\n  \"userName\": \"User1\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/member/queryChaincode",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"member",
+								"queryChaincode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "========== CLI ==========",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "queryWithRolling",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/sample/queryWithRolling?userId=skcc_user1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"sample",
+								"queryWithRolling"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "skcc_user1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "queryWithDiscovery",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/sample/queryWithDiscovery?userId=skcc_user1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"sample",
+								"queryWithDiscovery"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "skcc_user1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "queryWithContract",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/sample/queryWithContract?userId=skcc_user1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"sample",
+								"queryWithContract"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "skcc_user1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "invokeWithContract",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/sample/invokeWithContract?from=skcc_user1&to=contractor1_user1&value=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"sample",
+								"invokeWithContract"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "skcc_user1"
+								},
+								{
+									"key": "to",
+									"value": "contractor1_user1"
+								},
+								{
+									"key": "value",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
